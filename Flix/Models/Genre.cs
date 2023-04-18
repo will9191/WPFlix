@@ -6,7 +6,7 @@ namespace Flix.Models;
 public class Genre
 {
     [Key]
-    public int id { get; set; }
+    public byte id { get; set; }
     [Display(Name = "Name")]
     [Required(ErrorMessage = "Name is required")]
     [StringLength(30, ErrorMessage = "Name has to have 30 caracters")]
