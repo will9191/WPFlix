@@ -11,4 +11,6 @@ public class Genre
     [Required(ErrorMessage = "Name is required")]
     [StringLength(30, ErrorMessage = "Name has to have 30 caracters")]
     public string Name { get; set; }
+    public ICollection<MovieGenre> Movies { get; set; }
+    
 }

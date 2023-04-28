@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Flix.Models;
 
@@ -19,11 +17,8 @@ public class MovieRating
     public AppUser User { get; set; }
 
     [Required]
-    public byte RatingValue { get; set }
+    public byte RatingValue { get; set; }
 
     [Required]
     public DateTime RatingDate { get; set; }
-
-    
-}
 }

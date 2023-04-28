@@ -51,5 +51,9 @@ namespace Flix.Models
         public string HourDuration {get {
             return TimeSpan.FromMinutes(Duration).ToString(@"%h 'Hour' 'mm' 'Minutes' ");
         }}
+        
+        public ICollection<MovieComment> Comments { get; set; }
+        public ICollection<MovieGenre> Genres { get; set; }
+        public ICollection<MovieRating> Ratings { get; set; }
     }
 }
