@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Flix.Data;
 public class AppDbContext : IdentityDbContext
 {
-    
     public AppDbContext(DbContextOptions options) : base(options)
     {
     }

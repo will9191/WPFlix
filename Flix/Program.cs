@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Flix.Data;
+using Flix.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Objetos auxiliares de conexão
+string conn = builder.Configuration.GetConnectionString("WPFlix");
+var version = ServerVersion.AutoDetect(conn);
+builder.Services.AddDbContext<AppDbContext>();
 
 var app = builder.Build();
 
