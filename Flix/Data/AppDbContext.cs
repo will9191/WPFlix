@@ -20,17 +20,18 @@ public class AppDbContext : IdentityDbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        AppDbSeed appDbSeed = new(builder);
 
 
         #region Personalização do Identity
         builder.Entity<IdentityUser>(b => {
-            b.ToTable("User");
+            b.ToTable("Users");
         });
         builder.Entity<IdentityUserClaim<string>>(b => {
             b.ToTable("UserClaims");
         });
         builder.Entity<IdentityUserLogin<string>>(b => {
-            b.ToTable("Users");
+            b.ToTable("UserLogins");
         });
         builder.Entity<IdentityUserToken<string>>(b => {
             b.ToTable("UserTokens");

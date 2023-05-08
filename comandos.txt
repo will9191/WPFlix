@@ -11,3 +11,5 @@ dotnet add package Pomelo.EntityFrameworkCore.MySql --version 6.0.2
 
 --Pacote do Identity - gestão de usuários
 dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 6.0.16
+
+dotnet ef
