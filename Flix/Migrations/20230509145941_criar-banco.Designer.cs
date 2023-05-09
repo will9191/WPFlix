@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Flix.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230508134423_criar-banco")]
+    [Migration("20230509145941_criar-banco")]
     partial class criarbanco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,6 +169,29 @@ namespace Flix.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("Roles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "2cf01b70-cc17-4077-8b54-590ed3aa68f4",
+                            ConcurrencyStamp = "d76eb97a-4475-4adc-add7-5f0615a22203",
+                            Name = "Administrador",
+                            NormalizedName = "ADMINISTRADOR"
+                        },
+                        new
+                        {
+                            Id = "152408e1-ebae-4341-89a7-ff0eea20eb57",
+                            ConcurrencyStamp = "7ded9858-7c2d-44df-aa08-5d6f9c6ec634",
+                            Name = "Moderador",
+                            NormalizedName = "MODERADOR"
+                        },
+                        new
+                        {
+                            Id = "2701258d-2b09-4e01-91f0-011e5ab18152",
+                            ConcurrencyStamp = "c4caf69f-3199-42bb-be53-14b5ebf330fb",
+                            Name = "Usuário",
+                            NormalizedName = "USUÁRIO"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -259,7 +282,7 @@ namespace Flix.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
@@ -322,6 +345,13 @@ namespace Flix.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "4421698e-9ee2-4245-87f2-849f395d4e9c",
+                            RoleId = "2cf01b70-cc17-4077-8b54-590ed3aa68f4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -360,6 +390,28 @@ namespace Flix.Migrations
                         .HasColumnType("varchar(200)");
 
                     b.HasDiscriminator().HasValue("AppUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "4421698e-9ee2-4245-87f2-849f395d4e9c",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "648f6e42-2fe9-43aa-befa-38482e587d4a",
+                            Email = "willian.fernando040@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "WILLIAN.FERNANDO040@GMAIL.COM",
+                            NormalizedUserName = "WILL",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGfS5lIHVrIHlRnT5Q0Xw/GxBqClWcW54Yj2Q7wxPirIe1KpI4EiJxypfjY/enDfuw==",
+                            PhoneNumber = "14982260514",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "58df18a6-2025-4124-9c94-0500a4536d3a",
+                            TwoFactorEnabled = false,
+                            UserName = "Will",
+                            DateOfBirth = new DateTime(2005, 7, 6, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Willian",
+                            ProfilePicture = "/img/users/avatar.png"
+                        });
                 });
 
             modelBuilder.Entity("Flix.Models.MovieComment", b =>
