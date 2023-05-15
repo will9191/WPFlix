@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+
 namespace Flix.DataTransferObjects;
 
 public class LoginDto
@@ -6,7 +7,7 @@ public class LoginDto
     [Display(Name = "Email or username")]
     [Required(ErrorMessage = "Email or username is required")]
     public string Email { get; set; }
-    [Display(Name = "Passowrd")]
+    [Display(Name = "Password")]
     [Required(ErrorMessage = "Please, enter your password")]
     public string Password { get; set; }
     [Display(Name = "Keep connected?")]
