@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Flix.Controllers;
 
- [Authorize(Roles = "Administrador")]
+[Authorize(Roles = "Administrador")]
 
 public class AccountController : Controller
 {
@@ -15,8 +15,8 @@ public class AccountController : Controller
     private readonly UserManager<AppUser> _userManager;
 
     public AccountController(
-    ILogger<AccountController> logger, 
-    SignInManager<AppUser> signInManager, 
+    ILogger<AccountController> logger,
+    SignInManager<AppUser> signInManager,
     UserManager<AppUser> userManager)
     {
         _logger = logger;
@@ -40,13 +40,28 @@ public class AccountController : Controller
 
     [HttpPost]
     [AllowAnonymous]
-    public IActionResult Login(LoginDto login)
+    public async Task<IActionResult> Login(LoginDto login)
     {
         if (ModelState.IsValid)
         {
-            return LocalRedirect(login.ReturnUrl);
-        }
+            var result = await _signInManager.PasswordSignInAsync(
+                login.Email, login.Password, login.RememberMe, true
+            //Nao é necessario colocar lockoutOnFailure, apenas true, por conta que ja é o ultimo parametro
+            );
 
+            if (result.Succeeded)
+            {
+                _logger.LogInformation($"User {login.Email} accessed the system ");
+                return LocalRedirect(login.ReturnUrl);
+            }
+
+            if (result.IsLockedOut)
+            {
+                _logger.LogWarning($"User {login.Email} its blocked ");
+                return RedirectToAction("Lockout");
+            }
+            ModelState.AddModelError("login", "User and/or Password invalids!!!");
+        }
         return View(login);
     }
 }

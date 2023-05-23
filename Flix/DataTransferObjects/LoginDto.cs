@@ -9,6 +9,7 @@ public class LoginDto
     public string Email { get; set; }
     [Display(Name = "Password")]
     [Required(ErrorMessage = "Please, enter your password")]
+    [DataType(DataType.Password)]
     public string Password { get; set; }
     [Display(Name = "Keep connected?")]
     public bool RememberMe { get; set; }
