@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Flix.DataTransferObjects;
 using Flix.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Net.Mail;
 
 namespace Flix.Controllers;
 
@@ -44,9 +45,17 @@ public class AccountController : Controller
     {
         if (ModelState.IsValid)
         {
+            string userName = login.Email;
+            if(IsValidEmail(login.Email))
+            {
+                var user = await _userManager.FindByEmailAsync(login.Email);
+                if (user != null)
+                    userName = user.UserName;
+            }
+
             var result = await _signInManager.PasswordSignInAsync(
-                login.Email, login.Password, login.RememberMe, true
-            //Nao é necessario colocar lockoutOnFailure, apenas true, por conta que ja é o ultimo parametro
+                userName, login.Password, login.RememberMe, true
+            //Não é necessario colocar lockoutOnFailure, apenas true, por conta que ja é o ultimo parametro
             );
 
             if (result.Succeeded)
@@ -63,5 +72,18 @@ public class AccountController : Controller
             ModelState.AddModelError("login", "User and/or Password invalids!!!");
         }
         return View(login);
+    }
+
+    private bool IsValidEmail(string email)
+    {
+        try
+        {
+            MailAddress m = new(email);
+            return true;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
     }
 }

@@ -7,26 +7,44 @@
     <h1 class="display-4">Login</h1>
 </div>
 
+@section Styles{
+    <link rel="stylesheet" href="~/css/login.css">
+}
+
 <div class="container">
     <div class="row">
-        <div class="col-md-6 offset-3">
+        <div class="col-md-6  col-lg-4 m-auto">
             <form method="post" class="mt-4">
                 <input type="hidden" asp-for="ReturnUrl">
+                <div asp-validation-summary="All" class="text-danger" hidden></div>
+
                 <div class="mb-3">
                     <label asp-for="Email" class="form-label"></label>
                     <input  asp-for="Email" class="form-control">
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
+
                 <div class="mb-3">
                     <label asp-for="Password" class="form-label"></label>
                     <input asp-for="Password" class="form-control">
                      <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
+
                 <div class="mb-3 form-check">
                     <input asp-for="RememberMe" type="checkbox" class="form-check-input">
                     <label class="form-check-label" asp-for="RememberMe"></label>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+
+                <button type="submit" class=" w-100 btn btn-primary">Login</button>
+
+                <a asp-action="Forget" class="d-block text-center mt-3 forgetPassword">Forgot your password? </a>
+
+                <div class="border-text"></div>
+
+                    <a asp-action="Register" class="w-100 btn btn-success mt-3">Sign Up</a>
+
+              
+
             </form>
         </div>
     </div>
@@ -34,4 +52,19 @@
 
 @section Scripts{
     <partial name="_ValidationScriptsPartial"></partial>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let mensagemErro = '';
+        $('.validation-summary-errors ul li').each(function(){
+            mensagemErro += $(this).text() + '<br>';
+        });
+        if (mensagemErro != ''){
+            Swal.fire(
+                'Acesso Negado',
+                mensagemErro,
+                'error'
+            );
+        }
+
+    </script>
 }
