@@ -4,6 +4,7 @@ using Flix.DataTransferObjects;
 using Flix.Models;
 using Microsoft.AspNetCore.Identity;
 using System.Net.Mail;
+using System.Security.Claims;
 
 namespace Flix.Controllers;
 
@@ -74,6 +75,20 @@ public class AccountController : Controller
         return View(login);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        _logger.LogInformation($"{ClaimTypes.Email} has logged out");
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Register()
+    {
+        return View();
+    }
     private bool IsValidEmail(string email)
     {
         try
