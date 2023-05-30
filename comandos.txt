@@ -15,3 +15,5 @@ dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 6
 dotnet ef
 dotnet ef migrations add criar-banco
 dotnet ef database update
+
+dotnet dev-certs https

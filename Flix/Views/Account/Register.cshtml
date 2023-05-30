@@ -1,12 +1,87 @@
-@model Flix.DataTransferObjects.LoginDto
+@model Flix.DataTransferObjects.RegisterDto
 @{
     ViewData["Title"] = "New account";
 }
+
+@section Styles{
+    <link rel="stylesheet" href="~/css/register.css">
+}
+
 
 <div class="text-center">
     <h1 class="display-4">Create new account</h1>
 </div>
 
-@section Styles{
-    <link rel="stylesheet" href="~/css/register.css">
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6  col-lg-4 m-auto">
+            <form method="post" class="mt-4">
+                <div asp-validation-summary="All" class="text-danger" hidden></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input  asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Email" class="form-label"></label>
+                    <input  asp-for="Email" class="form-control">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="DataOfBirth" class="form-label"></label>
+                    <input  asp-for="DataOfBirth" class="form-control">
+                    <span asp-validation-for="DataOfBirth" class="text-danger"></span>
+                </div>
+
+
+
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control">
+                     <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <input asp-for="ConfirmPassword" class="form-control">
+                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class=" w-100 btn btn-primary">Register</button>
+
+
+                <div class="border-text"></div>
+
+                    <a asp-action="Login" class="w-100 btn btn-success mt-3">Sign In</a>
+
+              
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial"></partial>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let mensagemErro = '';
+        $('.validation-summary-errors ul li').each(function(){
+            mensagemErro += $(this).text() + '<br>';
+        });
+        if (mensagemErro != ''){
+            Swal.fire(
+                'Problem Creating Account',
+                mensagemErro,
+                'error'
+            );
+        }
+
+    </script>
 }
