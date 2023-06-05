@@ -12,7 +12,7 @@ namespace Flix.DataTransferObjects
         [DataType(DataType.Date)]
         [Display(Name = "Date of Birth")]
         [Required(ErrorMessage = "Plase, enter your Date of Birth")]
-        public DateTime DataOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         
         [Required(ErrorMessage = "Please, your Email")]
         [EmailAddress(ErrorMessage = "Please, enter your valid Email")]
