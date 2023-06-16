@@ -21,14 +21,14 @@ public class AppDbSeed
                 new IdentityRole()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = "Moderador",
-                    NormalizedName = "MODERADOR"
+                    Name = "Mod",
+                    NormalizedName = "MOD"
                 },
                 new IdentityRole()
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Name = "Usuário",
-                    NormalizedName = "USUÁRIO"
+                    Name = "User",
+                    NormalizedName = "USER"
                 },
                 
             };

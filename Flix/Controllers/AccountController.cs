@@ -8,6 +8,7 @@ using System.Security.Claims;
 using Flix.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using System.Text.Encodings.Web;
 
 namespace Flix.Controllers;
 
@@ -127,21 +128,40 @@ public class AccountController : Controller
 
             if (result.Succeeded)
             {
-                _logger.LogInformation($"Novo usuário registrado com o email {user.Email}");
+                _logger.LogInformation($"New user created with email {user.Email}");
 
                 var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                 var callbackUrl = Url.Action(
-                    "ConfirmEmail", "Account", new {userId = userId, code = code},
+                    "ConfirmEmail", "Account", new { userId = userId, code = code },
                     protocol: Request.Scheme
                 );
+
+                await _userManager.AddToRoleAsync(user, "User");
+
+                await _emailSender.SendEmailAsync(
+                    email: register.Email,
+                    subject: "WPFlix - New Account",
+                    htmlMessage: $"Please, confirm the creation of your account <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Click Here</a>"
+                );
+
+                return RedirectToAction("RegisterConfirmation");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
             }
 
         }
         return View(register);
     }
-
+    public IActionResult RegisterConfirmation()
+    {
+        return View();
+    }
+    
     private bool IsValidEmail(string email)
     {
         try
