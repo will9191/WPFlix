@@ -1,7 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using Flix.Data;
 using Flix.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
