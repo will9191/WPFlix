@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WPFLIX.DataTransferObjects;
+namespace Flix.DataTransferObjects;
 
 public class ForgetDto
 {
