@@ -11,18 +11,18 @@ public class AppDbContext : IdentityDbContext
     }
 
     public DbSet<AppUser> AppUsers { get; set; }
-    public DbSet<Genre> Genres { get; set; }
+    public DbSet<Genre> Genres { get; set;}
     public DbSet<Movie> Movies { get; set; }
-    public DbSet<MovieComment> MovieComments { get; set; }
+    public DbSet<MovieComment> MovieComments { get; set; } 
     public DbSet<MovieGenre> MovieGenres { get; set; }
-    public DbSet<MovieRating> MovieRatings { get; set; }
+    public DbSet<MovieRating> MovieRating { get; set; }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    protected override void OnModelCreating(ModelBuilder builder) //void não tem retorno
     {
         base.OnModelCreating(builder);
         AppDbSeed appDbSeed = new(builder);
 
-
+        //FluentAPI
         #region Personalização do Identity
         builder.Entity<IdentityUser>(b => {
             b.ToTable("Users");
@@ -45,45 +45,51 @@ public class AppDbContext : IdentityDbContext
         builder.Entity<IdentityUserRole<string>>(b => {
             b.ToTable("UserRoles");
         });
-
         #endregion
 
-        #region Many to Many - MovieComment
+        #region Many To Many - MovieComment
         builder.Entity<MovieComment>()
             .HasOne(mc => mc.Movie)
             .WithMany(m => m.Comments)
             .HasForeignKey(mc => mc.MovieId);
+
         builder.Entity<MovieComment>()
             .HasOne(mc => mc.User)
             .WithMany(u => u.Comments)
             .HasForeignKey(mc => mc.UserId);
         #endregion
 
-        #region Many to Many - MovieGenre
-        builder.Entity<MovieGenre>()
-            .HasKey(mg => new {mg.MovieId, mg.GenreId});
+        #region Many To Many - MovieGenre
+        // Definição de Chave Primária Composta
+        builder.Entity<MovieGenre>().HasKey(
+            mg => new { mg.MovieId, mg.GenreId }
+        );
+
         builder.Entity<MovieGenre>()
             .HasOne(mg => mg.Movie)
             .WithMany(m => m.Genres)
             .HasForeignKey(mg => mg.MovieId);
+
         builder.Entity<MovieGenre>()
             .HasOne(mg => mg.Genre)
             .WithMany(g => g.Movies)
             .HasForeignKey(mg => mg.GenreId);
         #endregion
-    
-        #region Many to Many - MovieRating
-        builder.Entity<MovieRating>()
-            .HasKey(mr => new {mr.MovieId, mr.UserId});
+
+        #region Many To Many - MovieRating
+        builder.Entity<MovieRating>().HasKey(
+            mr => new { mr.MovieId, mr.UserId }
+        );
+
         builder.Entity<MovieRating>()
             .HasOne(mr => mr.Movie)
             .WithMany(m => m.Ratings)
             .HasForeignKey(mr => mr.MovieId);
+
         builder.Entity<MovieRating>()
             .HasOne(mr => mr.User)
             .WithMany(u => u.Ratings)
             .HasForeignKey(mr => mr.UserId);
         #endregion
     }
-
 }

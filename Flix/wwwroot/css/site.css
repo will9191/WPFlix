@@ -79,3 +79,11 @@ a {
   white-space: nowrap;
   line-height: 60px;
 }
+
+.swal2-popup {
+  background: var(--bs-body-bg) !important;
+}
+
+.swal2-title, .swal2-content {
+  color: var(--bs-body-color) !important;
+}
